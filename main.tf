@@ -23,10 +23,11 @@ resource "aws_instance" "lab_instance" {
               #!/bin/bash
               apt-get update -y
               apt-get install -y docker.io
+              sudo usermod -aG docker ubuntu
               systemctl start docker
               systemctl enable docker
               docker run -d --name lab45-container -p 80:80 nikaprotsenko04/lab45
-              docker run -d --name watchtower --interval 30 -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower
+              docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --interval 30
               EOF
 
   tags = {
